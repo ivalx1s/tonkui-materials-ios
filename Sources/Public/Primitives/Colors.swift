@@ -1,6 +1,7 @@
 #if canImport(UIKit)
 import UIKit
 import SwiftUI
+import Foundation
 
 // To initialize color with color-literal, use the following trick:
 // start typing the color initialization and stop on opening brace
@@ -62,11 +63,94 @@ public extension Color {
 	}
 	
 	
-	static var blueTon: Color {
-		let light:   UIColor = #colorLiteral(red: 0.4705882353, green: 0.5176470588, blue: 0.5921568627, alpha: 1) // not explicitly set in design, educated guess
-		let lightHC: UIColor = #colorLiteral(red: 0.1647058824, green: 0.2274509804, blue: 0.3137254902, alpha: 1) // not explicitly set in design, educated guess
-		let dark:    UIColor = #colorLiteral(red: 0.1137254902, green: 0.1490196078, blue: 0.2, alpha: 1)
-		let darkHC:  UIColor = #colorLiteral(red: 0.05882352941, green: 0.0862745098, blue: 0.1411764706, alpha: 1) // not explicitly set in design, educated guess
+	static var tonPrimaryLabel: Color {
+		let light:   UIColor = #colorLiteral(red: 0.1215686275, green: 0.1215686275, blue: 0.1215686275, alpha: 1) // not explicitly set in design, educated guess
+		let lightHC: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) // not explicitly set in design, educated guess
+		let dark:    UIColor = #colorLiteral(red: 0.9411764706, green: 0.9411764706, blue: 0.9411764706, alpha: 1)
+		let darkHC:  UIColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) // not explicitly set in design, educated guess
+		return .init(
+			light:   light,
+			lightHC: lightHC,
+			dark:    dark,
+			darkHC:  darkHC
+		)
+	}
+	
+	static var tonSecondaryLabel: Color {
+		let light:   UIColor = #colorLiteral(red: 0.768627451, green: 0.7882352941, blue: 0.831372549, alpha: 1) // not explicitly set in design, educated guess
+		let lightHC: UIColor = #colorLiteral(red: 0.2509803922, green: 0.2901960784, blue: 0.3607843137, alpha: 1) // not explicitly set in design, educated guess
+		let dark:    UIColor = #colorLiteral(red: 0.537254902, green: 0.5803921569, blue: 0.6392156863, alpha: 1)
+		let darkHC:  UIColor = #colorLiteral(red: 0.4196078431, green: 0.4784313725, blue: 0.5529411765, alpha: 1) // not explicitly set in design, educated guess
+		return .init(
+			light:   light,
+			lightHC: lightHC,
+			dark:    dark,
+			darkHC:  darkHC
+		)
+	}
+	
+	static var tonTertiaryLabel: Color {
+		let light:   UIColor = #colorLiteral(red: 0.5921568627, green: 0.6274509804, blue: 0.6980392157, alpha: 1) // not explicitly set in design, educated guess
+		let lightHC: UIColor = #colorLiteral(red: 0.1137254902, green: 0.1529411765, blue: 0.2196078431, alpha: 1) // not explicitly set in design, educated guess
+		let dark:    UIColor = #colorLiteral(red: 0.3333333333, green: 0.3803921569, blue: 0.4392156863, alpha: 1)
+		let darkHC:  UIColor = #colorLiteral(red: 0.231372549, green: 0.2941176471, blue: 0.3843137255, alpha: 1) // not explicitly set in design, educated guess
+		return .init(
+			light:   light,
+			lightHC: lightHC,
+			dark:    dark,
+			darkHC:  darkHC
+		)
+	}
+	
+	static func tonBalanceRelativeGain(forLocale locale: Locale) -> Color {
+		let localeRegion = locale.regionCode
+		var light:   UIColor
+		var lightHC: UIColor
+		var dark:    UIColor
+		var darkHC:  UIColor
+		switch localeRegion {
+			case "zh", "ko":
+				light	 = #colorLiteral(red: 1, green: 0.5647058824, blue: 0.6, alpha: 1) // not explicitly set in design, educated guess
+				lightHC	 = #colorLiteral(red: 0.7568627451, green: 0, blue: 0.1529411765, alpha: 1) // not explicitly set in design, educated guess
+				dark	 = #colorLiteral(red: 1, green: 0.2784313725, blue: 0.4, alpha: 1)
+				darkHC	 = #colorLiteral(red: 0.8784313725, green: 0.2156862745, blue: 0.3137254902, alpha: 1) // not explicitly set in design, educated guess
+			default:
+				light	 = #colorLiteral(red: 0.4941176471, green: 0.8470588235, blue: 0.6901960784, alpha: 1) // not explicitly set in design, educated guess
+				lightHC	 = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.2980392157, alpha: 1) // not explicitly set in design, educated guess
+				dark	 = #colorLiteral(red: 0.2235294118, green: 0.8, blue: 0.5137254902, alpha: 1)
+				darkHC	 = #colorLiteral(red: 0.1411764706, green: 0.7176470588, blue: 0.431372549, alpha: 1) // not explicitly set in design, educated guess
+		}
+		return .init(
+			light:   light,
+			lightHC: lightHC,
+			dark:    dark,
+			darkHC:  darkHC
+		)
+	}
+	
+	
+	
+	/// Locale dependent color for relative financial loses.
+	///
+	/// In Chinese and Korean cultures red color marks gains and green marls loses.
+	static func tonBalanceRelativeLose(forLocale locale: Locale) -> Color {
+		let localeRegion = locale.regionCode
+		var light:   UIColor
+		var lightHC: UIColor
+		var dark:    UIColor
+		var darkHC:  UIColor
+		switch localeRegion {
+			case "zh", "ko":
+				light	 = #colorLiteral(red: 0.4941176471, green: 0.8470588235, blue: 0.6901960784, alpha: 1) // not explicitly set in design, educated guess
+				lightHC	 = #colorLiteral(red: 0, green: 0.6117647059, blue: 0.2980392157, alpha: 1) // not explicitly set in design, educated guess
+				dark	 = #colorLiteral(red: 0.2235294118, green: 0.8, blue: 0.5137254902, alpha: 1)
+				darkHC	 = #colorLiteral(red: 0.1411764706, green: 0.7176470588, blue: 0.431372549, alpha: 1) // not explicitly set in design, educated guess
+			default:
+				light	 = #colorLiteral(red: 1, green: 0.5647058824, blue: 0.6, alpha: 1) // not explicitly set in design, educated guess
+				lightHC	 = #colorLiteral(red: 0.7568627451, green: 0, blue: 0.1529411765, alpha: 1) // not explicitly set in design, educated guess
+				dark	 = #colorLiteral(red: 1, green: 0.2784313725, blue: 0.4, alpha: 1)
+				darkHC	 = #colorLiteral(red: 0.8784313725, green: 0.2156862745, blue: 0.3137254902, alpha: 1) // not explicitly set in design, educated guess
+		}
 		return .init(
 			light:   light,
 			lightHC: lightHC,
