@@ -62,6 +62,19 @@ public extension Color {
 		)
 	}
 	
+	static var tonListSeparator: Color {
+		let light:   UIColor = #colorLiteral(red: 0.6352941176, green: 0.6666666667, blue: 0.7294117647, alpha: 0.24) // not explicitly set in design, educated guess
+		let lightHC: UIColor = #colorLiteral(red: 0.09411764706, green: 0.1176470588, blue: 0.1882352941, alpha: 0.24) // not explicitly set in design, educated guess
+		let dark:    UIColor = #colorLiteral(red: 0.3098039216, green: 0.3529411765, blue: 0.4392156863, alpha: 0.2432222682)
+		let darkHC:  UIColor = #colorLiteral(red: 0.1490196078, green: 0.1803921569, blue: 0.2509803922, alpha: 0.24) // not explicitly set in design, educated guess
+		return .init(
+			light:   light,
+			lightHC: lightHC,
+			dark:    dark,
+			darkHC:  darkHC
+		)
+	}
+	
 	
 	static var tonPrimaryLabel: Color {
 		let light:   UIColor = #colorLiteral(red: 0.1215686275, green: 0.1215686275, blue: 0.1215686275, alpha: 1) // not explicitly set in design, educated guess
